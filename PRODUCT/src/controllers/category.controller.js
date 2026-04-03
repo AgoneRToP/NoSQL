@@ -1,7 +1,7 @@
 import { Category } from "../models/category.model.js";
 
 export const getAllCategories = async (req, res) => {
-  const categories = await Category.find().populate("books");
+  const categories = await Category.find().populate("product");
 
   res.send({
     success: true,

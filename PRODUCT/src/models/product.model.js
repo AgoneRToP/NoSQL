@@ -7,7 +7,7 @@ const productSchema = new mongoose.Schema(
     price: { type: Number, required: true },
     quantity: { type: Number, default: 0 },
     rating: { type: Number, default: 0 },
-    manufacture_year: { type: Number, required: true },
+    manufacture_year: { type: Number, required: true }
   },
   { timestamps: true },
 );

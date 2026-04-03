@@ -23,6 +23,6 @@
     total_pages: 235,
     author: "John Key",
     rating: 4.5,
-    category_id: 2
+    category: 2
 }
 ```
