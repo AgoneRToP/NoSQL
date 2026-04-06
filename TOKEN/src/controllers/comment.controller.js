@@ -1,7 +1,6 @@
-import { Comment } from "../models/comment.model";
+import { Comment } from "../models/comment.model.js";
 
 export const commentController = {
-  // Добавить комментарий
   addComment: async (req, res) => {
     try {
       const { text, authorId, postId } = req.body;
@@ -12,7 +11,6 @@ export const commentController = {
     }
   },
 
-  // Удалить комментарий
   deleteComment: async (req, res) => {
     try {
       await Comment.findByIdAndDelete(req.params.id);

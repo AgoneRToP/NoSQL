@@ -1,8 +1,7 @@
 import { Comment } from "../models/comment.model.js";
 import { Post } from "../models/post.model.js";
 
-export const postController = {
-  // Создать новый пост
+export const createPosts = {
   createPost: async (req, res) => {
     try {
       const { title, content, authorId } = req.body;
@@ -13,7 +12,6 @@ export const postController = {
     }
   },
 
-  // Получить пост со всеми комментариями
   getPostFull: async (req, res) => {
     try {
       const post = await Post.findById(req.params.id).populate('author', 'name');

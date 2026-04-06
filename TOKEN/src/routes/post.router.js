@@ -1,9 +1,9 @@
-import express from 'express';
-import { postController, toggleLike } from '../controllers/post.controller';
+import { Router } from 'express';
+import { createPosts, toggleLike } from '../controllers/post.controller.js';
 
-const postRouter = express.Router();
+const postRouter = Router();
 
-postRouter.post('/', postController);
+postRouter.post('/', createPosts.getPostFull);
 postRouter.post('/like', toggleLike);
 
 export default postRouter;
