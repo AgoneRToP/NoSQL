@@ -12,6 +12,7 @@ authRouter
     "/signup",
     ValidationMiddleware(RegisterSchema),
     authController.register,
-  );
+  )
+  .post("/refresh", authController.refresh)
 
 export default authRouter;

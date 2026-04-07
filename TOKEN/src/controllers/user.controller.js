@@ -15,6 +15,8 @@ class UserController {
       data: users,
     });
   };
+
+  upload
 }
 
 export default new UserController()
