@@ -7,12 +7,12 @@ import { RegisterSchema } from "../schemas/auth/register.schema.js";
 const authRouter = Router();
 
 authRouter
-  .post("/signin" ,ValidationMiddleware(LoginSchema), authController.login)
+  .post("/signin", ValidationMiddleware(LoginSchema), authController.login)
   .post(
     "/signup",
     ValidationMiddleware(RegisterSchema),
     authController.register,
   )
-  .post("/refresh", authController.refresh)
+  .post("/refresh", authController.refresh);
 
 export default authRouter;

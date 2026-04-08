@@ -6,6 +6,5 @@ const userRouter = Router();
 
 userRouter
   .get("/", Protected(true), userController.getAll)
-  .post("/upload", )
 
 export default userRouter;

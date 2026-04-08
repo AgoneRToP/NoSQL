@@ -2,22 +2,28 @@ import mongoose from "mongoose";
 
 const PostSchema = new mongoose.Schema(
   {
-    title: { type: String, required: true },
-    content: { type: String, required: true },
-    video_url: { type: mongoose.SchemaTypes.String },
-    image_url: { type: mongoose.SchemaTypes.String, required: true },
-    author: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
+    title: {
+      type: mongoose.SchemaTypes.String,
       required: true,
     },
-
-    likes: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
-
-    createdAt: { type: Date, default: Date.now },
+    content: {
+      type: mongoose.SchemaTypes.String,
+      required: true,
+    },
+    video_url: {
+      type: mongoose.SchemaTypes.String,
+    },
+    image_url: {
+      type: mongoose.SchemaTypes.String,
+      required: true,
+    },
+    created_by: {
+      type: mongoose.SchemaTypes.ObjectId,
+      ref: "User",
+    },
   },
   {
-    collation: "posts",
+    collection: "posts",
     versionKey: false,
     timestamps: true,
   },
