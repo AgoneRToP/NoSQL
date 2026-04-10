@@ -18,6 +18,11 @@ const UserSchema = new mongoose.Schema(
       min: [5, "Username kamida 5ta belgidan iborat bo'lishi kerak"],
       unique: true,
     },
+    email: {
+      type: mongoose.SchemaTypes.String,
+      required: true,
+      unique: true,
+    },
     password: {
       type: mongoose.SchemaTypes.String,
       required: true,

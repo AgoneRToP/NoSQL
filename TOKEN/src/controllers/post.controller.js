@@ -4,6 +4,7 @@ import path from "node:path";
 import { BadRequestException } from "../exceptions/bad-request.exception.js";
 import { NotFoundException } from "../exceptions/not-found.exception.js";
 import { ForbiddenException } from "../exceptions/forbidden.exception.js";
+import sendEmail from "../helpers/mail.helpers.js";
 
 class PostController {
   #_postModel;
@@ -37,6 +38,8 @@ class PostController {
           ? `/uploads/${req.files?.video?.[0]?.filename}`
           : null,
       });
+
+      sendEmail 
 
       res.send({
         success: true,

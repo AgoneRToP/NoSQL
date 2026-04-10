@@ -2,7 +2,15 @@ import { User } from "../models/user.model.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import jwtConfig from "../configs/jwt.config.js";
+import { NotFoundException } from "../exceptions/not-found.exception.js";
 import { ConflictException } from "../exceptions/conflict.exception.js";
+import { BadRequestException } from "../exceptions/bad-request.exception.js";
+import { config } from "dotenv";
+
+config();
+
+const BASE_URL = process.env.BASE_URL;
+
 
 class AuthController {
   #_userModel;
@@ -53,12 +61,12 @@ class AuthController {
 
   register = async (req, res) => {
     try {
-      const { name, age, username, password } = req.body;
+      const { name, age, username, password, email } = req.body;
 
       const existingUser = await this.#_userModel.findOne({ username });
 
       if (existingUser) {
-        throw new ConflictException("Username already taken");
+        throw new BadRequestException("Username already taken");
       }
 
       const allowedRoles = ["USER", "VIEWER"];
@@ -67,8 +75,9 @@ class AuthController {
       const hashedPass = await this.#_hashPassword(password);
       const newUser = await this.#_userModel.insertOne({
         name,
-        username,
         age,
+        username,
+        email,
         password: hashedPass,
         role: userRole,
       });
@@ -154,12 +163,54 @@ class AuthController {
     }
   };
 
+  forgotPassword = async (req, res, next) => {
+    try {
+      const { email } = req.body;
+
+      const existingUser = await this.#_userModel.findOne({ email });
+
+      if (!existingUser) {
+        throw new NotFoundException("User topilmadi!");
+      }
+
+      const signedUrl = signature.sign(
+        `${BASE_URL}/auth/reset-password?userId=${existingUser._id}`,
+        {
+          ttl: 30,
+        },
+      );
+
+      sendEmail(email, "Password reset", `Password reset link: ${signedUrl}`);
+
+      res.status(204).send();
+    } catch (error) {
+      next(error);
+    }
+  };
+
+  resetPassword = async (req, res, next) => {
+    try {
+      const { userId } = req.query;
+      const { password } = req.body;
+
+      const hashedPass = await this.#_hashPassword(password);
+
+      await this.#_userModel.updateOne(
+        { _id: userId },
+        { password: hashedPass },
+      );
+
+      res.status(204).send();
+    } catch (error) {
+      console.log(error, "ERROROR");
+      next(error);
+    }
+  };
+
   seedAdmins = async () => {
     const admins = [
       {
-        name: "admin",
         username: "admin",
-        age: 21,
         password: "123456",
       },
       {
