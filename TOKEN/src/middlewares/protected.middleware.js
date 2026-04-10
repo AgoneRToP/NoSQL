@@ -5,7 +5,10 @@ import { BadRequestException } from "../exceptions/bad-request.exception.js";
 
 export const Protected = (isProtected = true) => {
   return (req, res, next) => {
-    if (!isProtected) return next();
+    if (!isProtected) {
+      req.user = { role: "VIEWER" };
+      return next();
+    }
 
     const { authorization } = req.headers;
 
