@@ -8,7 +8,12 @@ const postRouter = Router();
 
 // postRouter.post("/", upload.single("image") ,postController.create);
 postRouter
-  .get("/", Protected(false), postController.getAll)
+  .get(
+    "/", 
+    Protected(false), 
+    Roles("ADMIN", "USER", "VIEWER"),
+    postController.getAll
+  )
   .post(
     "/",
     Protected(true),

@@ -61,14 +61,16 @@ class AuthController {
         throw new ConflictException("Username already taken");
       }
 
-      const hashedPass = await this.#_hashPassword(password);
+      const allowedRoles = ["USER", "VIEWER"];
+      const userRole = allowedRoles.includes(role) ? role : "USER";
 
+      const hashedPass = await this.#_hashPassword(password);
       const newUser = await this.#_userModel.insertOne({
         name,
         username,
         age,
         password: hashedPass,
-        role: "USER",
+        role: userRole,
       });
 
       // token generation
@@ -160,6 +162,13 @@ class AuthController {
         age: 21,
         password: "123456",
       },
+      {
+        name: "Viewer User",
+        username: "viewer",
+        age: 20,
+        password: "viewer123",
+        role: "VIEWER"
+      }
     ];
 
     for (let a of admins) {

@@ -72,6 +72,10 @@ class PostController {
         throw new NotFoundException("Post not found");
       }
 
+      if (user.role === "VIEWER") {
+        throw new ForbiddenException("VIEWERs cannot update posts");
+      }
+
       if (user.role !== "ADMIN" && foundedPost.created_by != user.id) {
         throw new ForbiddenException("You can only change your posts");
       }
