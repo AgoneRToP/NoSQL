@@ -214,10 +214,7 @@ class AuthController {
         password: "123456",
       },
       {
-        name: "Viewer User",
         username: "viewer",
-        age: 20,
-        password: "viewer123",
         role: "VIEWER"
       }
     ];
